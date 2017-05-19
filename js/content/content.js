@@ -17,6 +17,7 @@ function chromeLoadScript(callback, scripts, sender) {
 chrome.runtime.onMessage.addListener(function(message, sender, response) {
     if (message.type == "executeJs") {
         var taskId = message.taskId;
+        var userDatas = message.userDatas;
         for (let i = 0, len = message.jsArr.length; i < len; i++) {
             let js = message.jsArr[i];
             eval(`//# sourceURL=${js.jsUrl}\n${js.jsContent}`);

@@ -63,13 +63,25 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
                 debugTab.isContentJsExecuted = false;
                 let executeJs = function () {
                     if (debugTab.isContentJsExecuted && debugTab.jsContent && windowEx.jsContent) {
+                        //解析用户的额外数据
+                        var userDatasStr = url.split("userDatas=")[1];
+                        userDatasStr = decodeURIComponent(userDatasStr);
+                        var userDatas;
+                        try {
+                            userDatas = JSON.parse(userDatasStr);
+                        }
+                        catch (e) {
+                            userDatas = {};
+                        }
+
                         chrome.tabs.sendMessage(tabId, {
                             type: "executeJs",
                             jsArr: [
                                 windowEx,
                                 debugTab
                             ],
-                            taskId: debugTab.taskId
+                            taskId: debugTab.taskId,
+                            userDatas: userDatas
                         });
                         return true;
                     }
