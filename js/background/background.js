@@ -64,7 +64,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
                 let executeJs = function () {
                     if (debugTab.isContentJsExecuted && debugTab.jsContent && windowEx.jsContent) {
                         //解析用户的额外数据
-                        var userDatasStr = url.split("userDatas=")[1];
+                        var userDatasStr = tab.url.split("userDatas=")[1];
                         userDatasStr = decodeURIComponent(userDatasStr);
                         var userDatas;
                         try {
